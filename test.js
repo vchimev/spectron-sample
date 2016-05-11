@@ -19,7 +19,9 @@ describe('application launch', function () {
 
   it('shows an initial window', function () {
     return this.app.client.getWindowCount().then(function (count) {
+      console.log("before assert")
       assert.equal(count, 1)
+      console.log("after assert")
     })
   })
 })
