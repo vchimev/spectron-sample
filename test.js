@@ -4,24 +4,46 @@ var assert = require('assert')
 describe('application launch', function () {
   this.timeout(10000)
 
-  beforeEach(function () {
+  before(function () {
     this.app = new Application({
-      path: '/Applications/Calculator.app/Contents/MacOS/Calculator'
+      path: '/Users/vchimev/Downloads/Visual\ Studio\ Code.app/Contents/MacOS/Electron'
     })
     return this.app.start()
   })
 
-  afterEach(function () {
-    if (this.app && this.app.isRunning()) {
-      return this.app.stop()
-    }
+  after(function () {
+    // if (this.app && this.app.isRunning()) {
+    //  return this.app.stop()
+    // }
   })
 
-  it('shows an initial window', function () {
+  it('show vscode window', function () {
     return this.app.client.getWindowCount().then(function (count) {
-      console.log("before assert")
       assert.equal(count, 1)
-      console.log("after assert")
     })
   })
+
+  it('click extensions icon', function () {
+    return this.app.client.click('.extensions-statusbar')
+  })
+
+  it('select extensions install', function () {
+    return this.app.client.keys('\uE007')
+  })
+
+  it('get html', function () {
+    return this.app.client.getHTML('html').then(function (text) {
+      console.log(text)
+    })
+  })
+
+  it('enter NativeScript', function () {
+    return this.app.client.keys('NativeScript')
+  })
+
+  // it('get html', function () {
+  //   return this.app.client.getHTML('html').then(function (text) {
+  //     console.log(text)
+  //   })
+  // })
 })
